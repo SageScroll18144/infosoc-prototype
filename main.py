@@ -116,6 +116,8 @@ def detect(opt):
                         i += 1
                         plot_one_box(xyxy, im0, label=label, color=colour, line_thickness=opt.line_thickness)
 
+                        #envia para o arduino
+
 
             # Stream results
             if view_img:
@@ -172,5 +174,9 @@ if __name__ == '__main__':
     parser.add_argument('--show-fps', default=False, action='store_true', help='print fps to console')
     opt = parser.parse_args()
     check_requirements(exclude=('pycocotools', 'thop'))
+    
     with torch.no_grad():
-        detect(opt=opt)
+        try:
+            detect(opt=opt)
+        except:
+            exit(0)
