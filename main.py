@@ -17,6 +17,9 @@ from utils.general import check_img_size, check_requirements, check_imshow, non_
 from utils.plots import plot_one_box
 from utils.torch_utils import select_device, time_synchronized
 
+import leds
+
+arduino = None
 
 def detect(opt):
     source, view_img, imgsz, nosave, show_conf, save_path, show_fps = opt.source, not opt.hide_img, opt.img_size, opt.no_save, not opt.hide_conf, opt.output_path, opt.show_fps
@@ -116,8 +119,11 @@ def detect(opt):
                         i += 1
                         plot_one_box(xyxy, im0, label=label, color=colour, line_thickness=opt.line_thickness)
 
-                        #envia para o arduino
+                        emotions = ("anger","contempt","disgust","fear","happy","neutral","sad","surprise")
 
+                        #envia para o arduino
+                        global arduino
+                        arduino.send_message(emotions.index(emotions[0]))
 
             # Stream results
             if view_img:
@@ -175,6 +181,8 @@ if __name__ == '__main__':
     opt = parser.parse_args()
     check_requirements(exclude=('pycocotools', 'thop'))
     
+    arduino = leds.Leds('uss')
+
     with torch.no_grad():
         try:
             detect(opt=opt)
