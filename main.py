@@ -119,11 +119,11 @@ def detect(opt):
                         i += 1
                         plot_one_box(xyxy, im0, label=label, color=colour, line_thickness=opt.line_thickness)
 
-                        emotions = ("anger","contempt","disgust","fear","happy","neutral","sad","surprise")
+                        emotions_idx = ["anger","contempt","disgust","fear","happy","neutral","sad","surprise"]
 
                         #envia para o arduino
-                        global arduino
-                        arduino.send_message(emotions.index(emotions[0]))
+                        #global arduino
+                        #arduino.send_message(emotions_idx.index(emotions[0]))
 
             # Stream results
             if view_img:
@@ -181,10 +181,7 @@ if __name__ == '__main__':
     opt = parser.parse_args()
     check_requirements(exclude=('pycocotools', 'thop'))
     
-    arduino = leds.Leds('uss')
+    #arduino = leds.Leds('uss')
 
     with torch.no_grad():
-        try:
-            detect(opt=opt)
-        except:
-            exit(0)
+        detect(opt=opt)
