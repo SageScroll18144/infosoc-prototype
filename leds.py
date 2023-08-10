@@ -5,4 +5,5 @@ class Leds:
         self.port = serial.Serial(name_port, 9600)	
 
     def send_message(self, value):
-        self.port.write(value)
+        self.port.write(value.encode())
+        self.port.flush()

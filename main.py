@@ -122,8 +122,9 @@ def detect(opt):
                         emotions_idx = ["anger","contempt","disgust","fear","happy","neutral","sad","surprise"]
 
                         #envia para o arduino
-                        #global arduino
-                        #arduino.send_message(emotions_idx.index(emotions[0]))
+                        global arduino
+                        arduino.send_message(chr(emotions_idx.index(str(label.split(" ")[0])) + 48))
+                        print(chr(emotions_idx.index(str(label.split(" ")[0])) + 48))
 
             # Stream results
             if view_img:
@@ -181,7 +182,7 @@ if __name__ == '__main__':
     opt = parser.parse_args()
     check_requirements(exclude=('pycocotools', 'thop'))
     
-    #arduino = leds.Leds('uss')
+    arduino = leds.Leds('/dev/ttyACM0')
 
     with torch.no_grad():
         detect(opt=opt)
