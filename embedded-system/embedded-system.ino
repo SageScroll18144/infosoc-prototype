@@ -10,6 +10,7 @@ void loop() {
     char ans = Serial.read();
     if(ans == '0') setColor(0, 0, 255);
     else if(ans == '4') setColor(255, 255, 50);
+    else if(ans == '7') setColor(255, 203, 219);
     else setColor(255, 255, 0);
   }
 }
